@@ -15,8 +15,51 @@ public class AppListado {
 
         while (!salir){
             mostrarMenu();
+            try {
+                salir = operacion(scan, personas);
+
+            }catch (Exception e){
+                System.out.println("Ocurrio un Error"+e.getMessage());
+            }
             System.out.println("");
         }
+    }
+
+    private static boolean operacion(Scanner scan, List<Persona> personas) {
+        int opcion = Integer.parseInt(scan.nextLine());
+        boolean salir = false;
+        //Revisamos la opcion
+        switch (opcion){
+            case 1 ->{
+                //Agregar persona a la lista
+                System.out.print("Nombre de la persona: ");
+                String nombre = scan.nextLine();
+                System.out.print("Telefono de la persona: ");
+                String telefono = scan.nextLine();
+                System.out.print("Email de la persona: ");
+                String email = scan.nextLine();
+
+                //creamos objeto persona
+                Persona persona = new Persona(nombre, telefono, email);
+                //Lo agregamos a la lista
+                personas.add(persona);
+                System.out.println("La lista tiene: "+personas.size());
+            }
+            case 2 ->{
+                //Mostramos el listado
+                System.out.println("Lsitado de personas");
+                //Mejora usando lambda y metodo de referencia
+                //personas.forEach((persona -> System.out.println(persona)));
+                personas.forEach(System.out::println);
+            }
+            case 3 ->{
+                //La opcion es salir, cambiamos el estado
+                System.out.println("Saliendo del programa....");
+                salir = true;
+            }
+            default -> System.out.println("Opcion erronea: "+ opcion);
+        }
+        return salir;
     }
 
     private static void mostrarMenu() {
